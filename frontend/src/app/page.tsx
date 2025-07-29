@@ -9,13 +9,20 @@ export default function Home() {
   const [file, setFile] = useState<File>();
   const [query, setQuery] = useState("");
 
-  const onChange = (event: React.FormEvent) => {
+  const onChange = async (event: React.FormEvent) => {
     const files = (event.target as HTMLInputElement).files;
 
     if (files && files.length > 0) {
       setFile(files[0]);
     }
     // Send PDF to backend for processing
+
+    const res = await fetch("api/file", {
+      method: "POST",
+      body: file,
+    });
+
+    const data = await res.json();
   };
   const handleSubmit = () => {
     console.log("User typed:", query);
