@@ -24,9 +24,15 @@ export default function Home() {
 
     const data = await res.json();
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("User typed:", query);
-    // You could send this to an API, etc.
+
+    const res = await fetch("/api/query", {
+      method: "POST",
+      body: JSON.stringify({ query }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
   };
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
