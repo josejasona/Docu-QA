@@ -7,11 +7,15 @@ from langchain_community.vectorstores import FAISS
 import bs4
 from langchain import hub
 from langchain_community.document_loaders import WebBaseLoader
+from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langgraph.graph import START, StateGraph
 from typing_extensions import List, TypedDict
 from dotenv import load_dotenv
+
+from main import file_path
+
 
 load_dotenv()
 
@@ -34,8 +38,9 @@ vector_store = FAISS(
     index_to_docstore_id={},
 )
 
-
-# Load and chunk contents of the blog
+loader = PyMuPDFLoader(file_path=file_path, mode="single")
+'''
+########################################################################################
 loader = WebBaseLoader(
     web_paths=("https://lilianweng.github.io/posts/2023-06-23-agent/",),
     bs_kwargs=dict(
@@ -44,6 +49,9 @@ loader = WebBaseLoader(
         )
     ),
 )
+########################################################################################
+'''
+
 docs = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
