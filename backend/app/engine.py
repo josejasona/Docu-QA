@@ -14,7 +14,6 @@ from langgraph.graph import START, StateGraph
 from typing_extensions import List, TypedDict
 from dotenv import load_dotenv
 
-from main import file_path
 
 
 load_dotenv()
@@ -37,20 +36,10 @@ vector_store = FAISS(
     docstore=InMemoryDocstore(),
     index_to_docstore_id={},
 )
+from app.main import main_file_path
 
-loader = PyMuPDFLoader(file_path=file_path, mode="single")
-'''
-########################################################################################
-loader = WebBaseLoader(
-    web_paths=("https://lilianweng.github.io/posts/2023-06-23-agent/",),
-    bs_kwargs=dict(
-        parse_only=bs4.SoupStrainer(
-            class_=("post-content", "post-title", "post-header")
-        )
-    ),
-)
-########################################################################################
-'''
+print("File Path:", main_file_path)
+loader = PyMuPDFLoader(file_path=main_file_path, mode="single")
 
 docs = loader.load()
 

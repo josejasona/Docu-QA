@@ -14,15 +14,20 @@ export default function Home() {
 
     if (files && files.length > 0) {
       setFile(files[0]);
+      console.log(files[0]);
+
+      // Create FormData and append the file with its name
+      const formData = new FormData();
+      formData.append("file", files[0], files[0].name); // Append file with its name
+
+      // Send the file to the backend
+      const res = await fetch("http://localhost:8000/upload", {
+        method: "POST",
+        body: formData,
+      });
     }
-    // Send PDF to backend for processing
 
-    const res = await fetch("api/file", {
-      method: "POST",
-      body: file,
-    });
-
-    const data = await res.json();
+    // const data = await res.json();
   };
   const handleSubmit = async () => {
     console.log("User typed:", query);

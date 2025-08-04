@@ -1,4 +1,6 @@
 .env
 __pycache__/
 /backend/uploads_files/
+.DS_Store
+
 
