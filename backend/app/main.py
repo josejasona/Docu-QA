@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import os
+import importlib
 
 graph = ""
 
@@ -49,7 +50,12 @@ async def upload_file(file: UploadFile = File(...)):
 
     main_file_path = file_path
     print("Main File Path" , main_file_path)
-    from app.engine import graph
+
+   # Reload the engine module to reinitialize the graph
+    import app.engine  
+    importlib.reload(app.engine)  
+    from app.engine import graph  
+
    
     graph = graph
 
@@ -59,7 +65,6 @@ async def upload_file(file: UploadFile = File(...)):
 @app.post("/query")
 async def handle_query(query: QueryRequest):
     print("Received query:", query)
-    query.query
 
     # Run Query
     response = graph.invoke(({"question": query.query}))
