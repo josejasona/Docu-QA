@@ -43,43 +43,55 @@ export default function Home() {
     console.log(data.answer);
   };
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <header className="flex flex-row border-4 border-amber-200 w-full h-max p-5 gap-6 justify-start">
-        <div className="mr-auto align-middle">
-          {" "}
-          <p> DOC-QA </p>
-        </div>
+    <div className="flex flex-col">
+      <header className="flex items-center justify-between p-5 border-b-2 border-amber-200">
+        <p className="text-2xl font-extrabold">DOC-QA</p>
         <Navigation />
       </header>
 
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start border-4 border-amber-200">
-        <div className="border-4 border-red-500">
-          {" "}
-          <Input type="file" onChange={onChange} />
-        </div>
-        <div className="border-4 border-sky-400 w-full">
-          {file ? (
-            <>
-              <Input
-                onChange={(e) => setQuery(e.target.value)}
-                className="w-full max-w-md"
-                value={query}
-                placeholder="..."
-                type="search"
-              />
-              <div className="m-auto">
-                <Button onClick={handleSubmit} variant="outline">
-                  {" "}
-                  Click Me!
-                </Button>
-              </div>
-            </>
-          ) : (
-            <> </>
-          )}
-        </div>
+      <main className="flex items-center justify-between border-2 gap-4 border-green-600 w-full">
+        <label
+          htmlFor="file-upload"
+          className="border border-gray-300 rounded-2xl px-3 py-1.5 cursor-pointer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13"
+            />
+          </svg>
+        </label>
+        <input
+          onChange={onChange}
+          id="file-upload"
+          type="file"
+          className="hidden"
+        />
+        {file && (
+          <div className="flex gap-2 items-center w-1/2 mr-auto border-4 border-blue-400">
+            <Input
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-full"
+              value={query}
+              placeholder="Enter query"
+              type="search"
+            />
+            <Button onClick={handleSubmit} variant="outline">
+              Search
+            </Button>
+          </div>
+        )}
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>
+
+      <footer className="flex justify-center py-5"></footer>
     </div>
   );
 }
