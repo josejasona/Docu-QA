@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import Navigation from "@/components/ui/nav-bar";
 
 export default function Home() {
   const [file, setFile] = useState<File>();
@@ -38,9 +39,19 @@ export default function Home() {
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
+
+    console.log(data.answer);
   };
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+      <header className="flex flex-row border-4 border-amber-200 w-full h-max p-5 gap-6 justify-start">
+        <div className="mr-auto align-middle">
+          {" "}
+          <p> DOC-QA </p>
+        </div>
+        <Navigation />
+      </header>
+
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start border-4 border-amber-200">
         <div className="border-4 border-red-500">
           {" "}

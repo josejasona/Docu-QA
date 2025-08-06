@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import os
 import importlib
+import json
 
 graph = ""
 
@@ -56,7 +57,6 @@ async def upload_file(file: UploadFile = File(...)):
     importlib.reload(app.engine)  
     from app.engine import graph  
 
-   
     graph = graph
 
     # save or process file here
@@ -69,6 +69,8 @@ async def handle_query(query: QueryRequest):
     # Run Query
     response = graph.invoke(({"question": query.query}))
     print(response)
+
     
-    return {"response": f"Received query: {query}"}
+    
+    return response
 
