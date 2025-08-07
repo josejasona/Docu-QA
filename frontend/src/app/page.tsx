@@ -1,14 +1,14 @@
 "use client"; // This directive must be at the top
 
-import Image from "next/image";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { use, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/ui/nav-bar";
 
 export default function Home() {
   const [file, setFile] = useState<File>();
   const [query, setQuery] = useState("");
+  const [messages, setMessages] = useState<string[]>([]);
 
   const onChange = async (event: React.FormEvent) => {
     const files = (event.target as HTMLInputElement).files;
@@ -26,12 +26,14 @@ export default function Home() {
         method: "POST",
         body: formData,
       });
+      const data = await res.json();
+      console.log(data);
     }
-
-    // const data = await res.json();
   };
+
   const handleSubmit = async () => {
     console.log("User typed:", query);
+    setMessages((prevMessages) => [...prevMessages, query]);
 
     const res = await fetch("/api/query", {
       method: "POST",
@@ -41,15 +43,18 @@ export default function Home() {
     const data = await res.json();
 
     console.log(data.answer);
+
+    setMessages((prevMessages) => [...prevMessages, data.answer]);
   };
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-4 min-h-screen">
       <header className="flex items-center justify-between p-5">
         <p className="text-2xl font-extrabold">DOC-QA</p>
         <Navigation />
       </header>
 
-      <main className="flex items-center justify-between gap-4 w-full">
+      <main className="flex items-center justify-between gap-4 w-full h-auto">
         <label
           htmlFor="file-upload"
           className="border border-gray-300 rounded-2xl px-3 py-1.5 cursor-pointer"
@@ -90,8 +95,14 @@ export default function Home() {
           </div>
         )}
       </main>
+      <div className="h-80 rounded-3xl bg-gray-600 flex-grow mx-3">
+        {" "}
+        {messages.map((message, index) => (
+          <ul key={index}>{message}</ul>
+        ))}{" "}
+      </div>
 
-      <footer className="flex justify-center py-5"></footer>
+      <footer className="mt-auto flex justify-center py-5 border-4 border-fuchsia-400"></footer>
     </div>
   );
 }
