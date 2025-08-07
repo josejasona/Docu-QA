@@ -44,12 +44,12 @@ export default function Home() {
   };
   return (
     <div className="flex flex-col">
-      <header className="flex items-center justify-between p-5 border-b-2 border-amber-200">
+      <header className="flex items-center justify-between p-5">
         <p className="text-2xl font-extrabold">DOC-QA</p>
         <Navigation />
       </header>
 
-      <main className="flex items-center justify-between border-2 gap-4 border-green-600 w-full">
+      <main className="flex items-center justify-between gap-4 w-full">
         <label
           htmlFor="file-upload"
           className="border border-gray-300 rounded-2xl px-3 py-1.5 cursor-pointer"
@@ -76,7 +76,7 @@ export default function Home() {
           className="hidden"
         />
         {file && (
-          <div className="flex gap-2 items-center w-1/2 mr-auto border-4 border-blue-400">
+          <div className="flex gap-2 items-center w-1/2 mr-auto">
             <Input
               onChange={(e) => setQuery(e.target.value)}
               className="w-full"
