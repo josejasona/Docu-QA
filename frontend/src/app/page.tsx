@@ -95,11 +95,23 @@ export default function Home() {
           </div>
         )}
       </main>
-      <div className="h-80 rounded-3xl bg-gray-600 flex-grow mx-3">
+      <div className="h-80 rounded-3xl bg-gray-600 flex-grow mx-3 ">
         {" "}
-        {messages.map((message, index) => (
-          <ul key={index}>{message}</ul>
-        ))}{" "}
+        {messages.map((message, index) => {
+          const isUser = index % 2 === 1;
+          return (
+            <div
+              key={index}
+              className={`mt-2 mx-2 mb-2 max-w-[25%] px-4 py-2 rounded-xl text-white ${
+                isUser
+                  ? "ml-auto bg-blue-500 text-right"
+                  : "mr-auto bg-gray-800 text-left"
+              }`}
+            >
+              {message}
+            </div>
+          );
+        })}{" "}
       </div>
 
       <footer className="mt-auto flex justify-center py-5 border-4 border-fuchsia-400"></footer>
